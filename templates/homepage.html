@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="full-screen">
+    <div class="full-screen__body">
+        <div class="full-screen__title">Murder on the Orient Express</div>
+        <div class="full-screen__text">Agatha Christie</div>
+    </div>
+    <video autoplay muted loop preload="auto" class="full-screen__video">
+        <source type="video/mp4" src="../static/video/train.mp4">
+    </video>
+</section>
+
+<section class="biography">
+    <div class="biography__container">
+        <div class="biography__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet cum expedita laborum
+            magni maxime modi molestiae nisi odit repellat totam. Aperiam autem dolorem eaque error esse eum harum, in
+            iure labore modi, nesciunt quam qui quisquam ratione rerum sit velit veniam vero voluptas voluptatum. Ad
+            fugit iure perferendis sequi voluptas?
+        </div>
+        <div class="biography__img">
+            <img src="../static/img/agatha.jpg" alt="">
+        </div>
+    </div>
+</section>
+
+<section class="facts">
+    <div class="facts__container">
+        <div class="facts__content">
+            <h2 class="facts__title"></h2>
+            <div class="facts__text"></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
