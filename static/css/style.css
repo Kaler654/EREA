@@ -74,6 +74,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /*--------------------*/
 
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
 
 .wrapper {
     overflow: hidden;
@@ -471,6 +477,7 @@ svg {
     z-index: 5;
     background-color: #0B0B0B;
     color: #fff;
+    border-bottom: 1px solid #86989B;
 }
 
 .facts__content {
@@ -496,6 +503,7 @@ svg {
 /* REGISTER FORM */
 
 .form {
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     background-color: #0B0B0B;
     padding: 30vh 0px;
@@ -516,20 +524,76 @@ svg {
     box-shadow: 0px 0px 8px 6px rgba(0, 0, 0, 0.21);
 }
 
-.form__content input {
+.form-input {
     margin: 15px 0px;
     width: 50%;
     padding: 10px 5px;
     border-radius: 3px;
-    background-color: #0B0B0B;
+    background-color: #242424;
+    color: #fff;
+}
+
+.form-input::placeholder {
+    color: #BABAC3;
+    font-size: 14px;
+    font-weight: 800;
+    opacity: 0.5;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+
+.form-input:focus {
+    color: #fff;
+}
+
+.form-input:focus::placeholder {
+    color: transparent
 }
 
 .form__title {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 4.5px;
 }
 
+.custom-btn {
+    margin: 15px 0px;
+    width: 50%;
+    padding: 10px 5px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    font-size: 16px;
+    letter-spacing: 1.6px;
+    font-weight: 500;
+    transition: all 200ms linear;
+}
 
-.form_form {
+.custom-btn:hover {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.2);
+    transition: all 200ms linear;
+    cursor: pointer;
 }
 
 /*----------------------*/
+
+.read {
+    position: relative;
+    z-index: 5;
+    background-color: #0B0B0B;
+    color: #ffffff;
+    width: 100%;
+}
+
+.read__content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #dddddd;
+    min-width: 100%;
+}
+
+.read__container {
+    max-width: 100%;
+    padding: 0;
+}

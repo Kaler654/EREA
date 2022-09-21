@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="register_form form">
-    <div class="register_form__content form__content">
-        <div class="register_form__title form__title">
-            <h1>Registration</h1>
+<div class="login_form form">
+    <div class="login_form__content form__content">
+        <div class="login_form__title form__title">
+            <h1>Login</h1>
         </div>
-        <div class="register_form__form form_form">
+        <div class="login_form__form form_form">
             <form action="" method="post" class="">
                 {{ form.hidden_tag() }}
                 <p>
@@ -19,16 +19,8 @@
                     {% endfor %}
                 </p>
                 <p>
-                    {{ form.password(class="form-input", placeholder="Pasword", type="password", autocomplete="off") }}<br>
+                    {{ form.password(class="form-input", placeholder="Password", type="password", autocomplete="off") }}<br>
                     {% for error in form.password.errors %}
-                        <p class="alert alert-danger" role="alert">
-                            {{ error }}
-                        </p>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.password_again(class="form-input", placeholder="Remember password", type="password", autocomplete="off") }}<br>
-                    {% for error in form.password_again.errors %}
                         <p class="alert alert-danger" role="alert">
                             {{ error }}
                         </p>
