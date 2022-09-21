@@ -433,8 +433,8 @@ svg {
 .biography {
     position: relative;
     z-index: 5;
-    background-color: #000000;
-    padding: 150px 0px 150px 0px;
+    background-color: #0B0B0B;
+    padding: 150px 0px;
     border-bottom: 1px solid #86989B;
 }
 
@@ -464,3 +464,72 @@ svg {
     border-radius: 50%;
     border: 5px solid #86989B;
 }
+
+.facts {
+    position: relative;
+    padding: 100px 0px;
+    z-index: 5;
+    background-color: #0B0B0B;
+    color: #fff;
+}
+
+.facts__content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.facts__title {
+    font-size: 48px;
+
+}
+
+.facts__text {
+    margin-top: 45px;
+    font-size: 24px;
+}
+
+.facts__text li {
+    padding: 15px 0px;
+}
+
+/* REGISTER FORM */
+
+.form {
+    text-align: center;
+    background-color: #0B0B0B;
+    padding: 30vh 0px;
+    height: 100vh;
+}
+
+.form__content {
+    color: #fff;
+    padding: 50px 25px;
+
+    max-width: 500px;
+    margin: 0px auto;
+    font-size: 24px;
+    background-color: #111111;
+    border-radius: 3%;
+    -webkit-box-shadow: 0px 0px 8px 6px rgba(0, 0, 0, 0.21);
+    -moz-box-shadow: 0px 0px 8px 6px rgba(0, 0, 0, 0.21);
+    box-shadow: 0px 0px 8px 6px rgba(0, 0, 0, 0.21);
+}
+
+.form__content input {
+    margin: 15px 0px;
+    width: 50%;
+    padding: 10px 5px;
+    border-radius: 3px;
+    background-color: #0B0B0B;
+}
+
+.form__title {
+    margin-bottom: 15px;
+}
+
+
+.form_form {
+}
+
+/*----------------------*/
