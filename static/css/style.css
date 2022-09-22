@@ -103,7 +103,6 @@ body::-webkit-scrollbar {
 }
 
 
-
 #title {
     width: 900px;
     min-height: 18px;
@@ -427,71 +426,6 @@ svg {
 }
 
 /*---------------------------------*/
-
-.biography {
-    position: relative;
-    z-index: 5;
-    background-color: #0B0B0B;
-    padding: 150px 0px;
-    border-bottom: 1px solid #86989B;
-}
-
-.biography__container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.biography__text {
-    flex: 0 1 25%;
-    color: #ffffff;
-    font-size: 24px;
-    line-height: 1.5;
-}
-
-.biography__img {
-    flex: 0 1 25%;
-    justify-self: center;
-    overflow: hidden;
-}
-
-.biography__img img {
-    width: 350px;
-    height: 450px;
-    border-radius: 50%;
-    border: 5px solid #86989B;
-}
-
-.facts {
-    position: relative;
-    padding: 100px 0px;
-    z-index: 5;
-    background-color: #0B0B0B;
-    color: #fff;
-    border-bottom: 1px solid #86989B;
-}
-
-.facts__content {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.facts__title {
-    font-size: 48px;
-
-}
-
-.facts__text {
-    margin-top: 45px;
-    font-size: 24px;
-}
-
-.facts__text li {
-    padding: 15px 0px;
-}
-
 /* REGISTER FORM */
 
 .form {
@@ -636,8 +570,7 @@ svg {
     letter-spacing: 2px;
 }
 
-
-@media only screen and (min-width: 768px) {
+@media (min-width: 768px) {
     .timeline:before {
         content: "";
         position: absolute;
@@ -650,7 +583,7 @@ svg {
     }
 
     .timeline ul li {
-        width: 50%;
+        width: 48%;
         position: relative;
         margin-bottom: 15%;
     }
@@ -658,14 +591,14 @@ svg {
     .timeline ul li:nth-child(odd) {
         float: left;
         clear: right;
-        transform: translateX(-30px);
+        transform: translateX(-5px);
         border-radius: 20px 0px 20px 20px;
     }
 
     .timeline ul li:nth-child(even) {
         float: right;
         clear: left;
-        transform: translateX(30px);
+        transform: translateX(5px);
         border-radius: 0px 20px 20px 20px;
     }
 
@@ -698,33 +631,64 @@ svg {
         background-color: #fff;
         transition: all 500ms linear;
     }
+
+
+    .timeline-content h1 {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        margin-bottom: 10px;
+    }
+
+    .timeline-content p {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 300;
+    }
+
+    .timeline-content h3 {
+        font-size: 12px;
+    }
+
+    .timeline-content .date {
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: 2px;
+    }
+
+    .date {
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: 2px;
+    }
+
 }
 
 
 /* Классы для активации анимации при прокрутке -----------------------------------------------------*/
 
 ._anim_show__timeline_left {
-	left: -100%;
-	opacity: 0;
-	transition: all 1s ease 0s;
+    left: -100%;
+    opacity: 0;
+    transition: all 1s ease 0s;
 }
 
 ._anim_show__timeline_left._active,
 ._active ._anim_show__timeline_left {
-	opacity: 1;
-	left: 0px;
+    opacity: 1;
+    left: 0px;
 }
 
 ._anim_show__timeline_right {
-	right: -100%;
-	opacity: 0;
-	transition: all 1s ease 0s;
+    right: -100%;
+    opacity: 0;
+    transition: all 1s ease 0s;
 }
 
 ._anim_show__timeline_right._active,
 ._active ._anim_show__timeline_right {
-	opacity: 1;
-	right: 0px;
+    opacity: 1;
+    right: 0px;
 }
 
 .read {
@@ -750,4 +714,5 @@ svg {
 .error-message {
     font-size: 14px;
 }
+
 /* ---------------------------------------------------------------------------- */
