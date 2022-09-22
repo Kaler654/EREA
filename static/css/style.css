@@ -81,6 +81,10 @@ body::-webkit-scrollbar {
     height: 0;
 }
 
+/*body {*/
+/*    font-family: Poppins, sans-serif;*/
+/*}*/
+
 .wrapper {
     overflow: hidden;
     display: flex;
@@ -98,19 +102,7 @@ body::-webkit-scrollbar {
     padding: 0px 15px;
 }
 
-/* Read book */
 
-/*body {*/
-/*  margin: 0;*/
-/*  background: #fafafa;*/
-/*  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*  color: #333;*/
-
-/*  position: absolute;*/
-/*  height: 100%;*/
-/*  width: 100%;*/
-/*  min-height: 800px;*/
-/*}*/
 
 #title {
     width: 900px;
@@ -512,7 +504,7 @@ svg {
 
 .form__content {
     color: #fff;
-    padding: 50px 25px;
+    padding: 50px 50px;
 
     max-width: 500px;
     margin: 0px auto;
@@ -557,6 +549,12 @@ svg {
     letter-spacing: 4.5px;
 }
 
+.account {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #fff;
+}
+
 .custom-btn {
     margin: 15px 0px;
     width: 50%;
@@ -575,25 +573,181 @@ svg {
     cursor: pointer;
 }
 
-/*----------------------*/
 
-.read {
-    position: relative;
-    z-index: 5;
-    background-color: #0B0B0B;
-    color: #ffffff;
+/*-----------------------*/
+.timeline-container {
+    min-height: 100vh;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 0;
+    position: relative;
+    background-color: #0B0B0B;
 }
 
-.read__content {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    background-color: #dddddd;
-    min-width: 100%;
+.timeline {
+    margin: 0 auto;
+    position: relative;
+}
+
+.timeline ul {
+    list-style: none;
+}
+
+.timeline ul li {
+    padding: 20px;
+    background-color: #1e1f22;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.timeline ul li:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-content h1 {
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+.timeline-content p {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 300;
+}
+
+.timeline-content h3 {
+    font-size: 14px;
+}
+
+.timeline-content .date {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.date {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .timeline:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 100%;
+        background-color: gray;
+    }
+
+    .timeline ul li {
+        width: 50%;
+        position: relative;
+        margin-bottom: 15%;
+    }
+
+    .timeline ul li:nth-child(odd) {
+        float: left;
+        clear: right;
+        transform: translateX(-30px);
+        border-radius: 20px 0px 20px 20px;
+    }
+
+    .timeline ul li:nth-child(even) {
+        float: right;
+        clear: left;
+        transform: translateX(30px);
+        border-radius: 0px 20px 20px 20px;
+    }
+
+    .timeline ul li::before {
+        content: "";
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background-color: gray;
+        top: 0px;
+    }
+
+    .timeline ul li:nth-child(odd)::before {
+        transform: translate(50%, -50%);
+        right: -30px;
+    }
+
+    .timeline ul li:nth-child(even)::before {
+        transform: translate(-50%, -50%);
+        left: -30px;
+    }
+
+    .timeline-content .date {
+        position: absolute;
+        top: -30px;
+    }
+
+    .timeline ul li:hover::before {
+        background-color: #fff;
+        transition: all 500ms linear;
+    }
+}
+
+
+/* Классы для активации анимации при прокрутке -----------------------------------------------------*/
+
+._anim_show__timeline_left {
+	left: -100%;
+	opacity: 0;
+	transition: all 1s ease 0s;
+}
+
+._anim_show__timeline_left._active,
+._active ._anim_show__timeline_left {
+	opacity: 1;
+	left: 0px;
+}
+
+._anim_show__timeline_right {
+	right: -100%;
+	opacity: 0;
+	transition: all 1s ease 0s;
+}
+
+._anim_show__timeline_right._active,
+._active ._anim_show__timeline_right {
+	opacity: 1;
+	right: 0px;
+}
+
+.read {
+    padding: 50px 0px 100px 0px;
+    background-color: #0B0B0B;
+    position: relative;
 }
 
 .read__container {
-    max-width: 100%;
-    padding: 0;
+    text-align: center;
 }
+
+.read_btn {
+    padding: 10px 15px;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #1E1F22;
+
+}
+
+.error-message {
+    font-size: 14px;
+}
+/* ---------------------------------------------------------------------------- */

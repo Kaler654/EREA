@@ -3379,7 +3379,7 @@ EPUBJS.Reader = function (bookPath, _options) {
     if (this.settings.previousLocationCfi) {
         this.displayed = this.rendition.display(this.settings.previousLocationCfi);
     } else {
-        this.displayed = this.rendition.display();
+        this.displayed = this.rendition.display(2);
     }
 
     book.ready.then(function () {

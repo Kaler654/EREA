@@ -8,10 +8,8 @@ import datetime
 from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'N#pC@UzmS5kw%@$F'
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
-    days=365
-)
+app.config["SECRET_KEY"] = "N#pC@UzmS5kw%@$F"
+app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(days=365)
 
 #  Инициализация LoginManager
 login_manager = LoginManager()
@@ -25,25 +23,32 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def reqister():
     """Форма регистрации"""
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
-            return render_template('register.html', title='Регистрация',
-                                   form=form,
-                                   message="Пароли не совпадают")
+            return render_template(
+                "register.html",
+                title="Registration",
+                form=form,
+                message="Passwords do not match",
+            )
         db_sess = db_session.create_session()
 
         all_users = db_sess.query(User.name).all()
         if not all([form.name.data != user_name[0] for user_name in all_users]):
-            return render_template('register.html', form=form,
-                                   message="Пользователь с таким именем уже есть")
+            return render_template(
+                "register.html",
+                form=form,
+                message="There is already a user with the same name",
+            )
 
         if db_sess.query(User).filter(User.name == form.name.data).first():
-            return render_template('register.html', form=form,
-                                   message="Такой пользователь уже есть")
+            return render_template(
+                "register.html", form=form, message="This user already exists"
+            )
         user = User(
             name=form.name.data,
             status="Пользователь",
@@ -51,11 +56,12 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        return redirect('/login')
-    return render_template('register.html', title='Регистрация', form=form)
+        login_user(user, remember=True)
+        return redirect("/book")
+    return render_template("register.html", title="Registration", form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     """Форма авторизации"""
     form = LoginForm()
@@ -64,24 +70,47 @@ def login():
         user = db_sess.query(User).filter(User.name == form.name.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=True)
-            return redirect("/")
-        return render_template('login.html',
-                               message="Неправильный логин или пароль",
-                               form=form)
-    return render_template('login.html', title='Авторизация', form=form)
+            return redirect("/book")
+        return render_template(
+            "login.html", message="Incorrect login or password", form=form
+        )
+    return render_template("login.html", title="Authorization", form=form)
 
 
-@app.route('/')
-@app.route('/index')
+@app.route("/")
+@app.route("/index")
 def index():
+    if current_user.is_authenticated:
+        return render_template("book_view.html")
     return render_template("homepage.html")
 
 
-@app.route('/book')
+@app.route("/book")
+@login_required
 def book():
     return render_template("book_view.html")
 
 
-if __name__ == '__main__':
+@app.errorhandler(401)
+def unauthorized(error):
+    """Пользователь не авторизован"""
+    return redirect("/register")
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Страница не найдена"""
+    return render_template("errors/404.html")
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    """Выход из учётной записи"""
+    logout_user()
+    return redirect("/")
+
+
+if __name__ == "__main__":
     db_session.global_init("db/data.db")
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host="127.0.0.1")
