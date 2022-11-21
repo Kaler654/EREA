@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+<iframe src="https://logrocket.com/" onload="onLoad()" onerror="onError()"></iframe>
+<script>
+    const iframe = document.querySelectorAll("iframe")[0];
+
+    iframe.onload = function () {
+        console.log("iframe загрузился");
+    }
+</script>
+</body>
+</html>
