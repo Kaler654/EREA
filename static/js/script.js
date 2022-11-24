@@ -87,5 +87,15 @@ function removeWordFromDictionary() {
     document.querySelectorAll(".modal__btn")[0].setAttribute("onclick", "addWordToDictionary()")
 }
 
+function hang_links() {
+    tocLinks = document.querySelectorAll(".toc_link")
+    for (index = 0; index < tocLinks.length; index++) {
+        console.log(tocLinks[index])
+        tocLinks[index].setAttribute("onclick", "setTimeout(startSelect, 1000)")
+    }
+}
+
+
 setTimeout(startSelect, 1000)
+setTimeout(hang_links, 1000)
 
