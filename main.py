@@ -33,52 +33,52 @@ def get_translate():
     return json.dumps({"translate": translate_js(text)})
 
 
-def add_word_to_dict(w):  # принимает татарское слово
-    db_sess = db_session.create_session()
-    word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()
-    if not word_id:
-        new_word = Words()
-        new_word.word_tat = w.lower()
-        new_word.word_ru = translate_tat_to_rus(w.lower())
-        db_sess.add(new_word)
-        db_sess.commit()
-    word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()[0]
-    new_ass = Users_to_words()
-    new_ass.word_id = word_id
-    new_ass.user_id = current_user.id
-    try:
-        db_sess.add(new_ass)
-        db_sess.commit()
-    except sqlalchemy.exc.IntegrityError:
-        pass
+# def add_word_to_dict(w):  # принимает татарское слово
+#     db_sess = db_session.create_session()
+#     word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()
+#     if not word_id:
+#         new_word = Words()
+#         new_word.word_tat = w.lower()
+#         new_word.word_ru = translate_tat_to_rus(w.lower())
+#         db_sess.add(new_word)
+#         db_sess.commit()
+#     word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()[0]
+#     new_ass = Users_to_words()
+#     new_ass.word_id = word_id
+#     new_ass.user_id = current_user.id
+#     try:
+#         db_sess.add(new_ass)
+#         db_sess.commit()
+#     except sqlalchemy.exc.IntegrityError:
+#         pass
+#
+#
+# def delete_word_of_dict(w):  # принимает татарское слово
+#     db_sess = db_session.create_session()
+#     word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()
+#     if word_id:
+#         word = db_sess.query(Words).filter(Words.id == word_id[0]).first()
+#         ass = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
+#                                                    Users_to_words.word_id == word_id[0]).first()
+#         db_sess.delete(word)
+#         db_sess.delete(ass)
+#         db_sess.commit()
 
 
-def delete_word_of_dict(w):  # принимает татарское слово
-    db_sess = db_session.create_session()
-    word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()
-    if word_id:
-        word = db_sess.query(Words).filter(Words.id == word_id[0]).first()
-        ass = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
-                                                   Users_to_words.word_id == word_id[0]).first()
-        db_sess.delete(word)
-        db_sess.delete(ass)
-        db_sess.commit()
-
-
-@app.route("/add_wordToDict", methods=["POST"])
-def add_word_post():
-    word = json.loads(request.data)["word"]
-    print(word)
-    add_word_to_dict(word)
-    return json.dumps({'success': True})
-
-
-@app.route("/remove_wordFromDict", methods=["POST"])
-def remove_word_post():
-    word = json.loads(request.data)["word"]
-    print(word)
-    delete_word_of_dict(word)
-    return json.dumps({'success': True})
+# @app.route("/add_wordToDict", methods=["POST"])
+# def add_word_post():
+#     word = json.loads(request.data)["word"]
+#     print(word)
+#     add_word_to_dict(word)
+#     return json.dumps({'success': True})
+#
+#
+# @app.route("/remove_wordFromDict", methods=["POST"])
+# def remove_word_post():
+#     word = json.loads(request.data)["word"]
+#     print(word)
+#     delete_word_of_dict(word)
+#     return json.dumps({'success': True})
 
 
 @login_manager.user_loader
@@ -177,6 +177,6 @@ def logout():
 
 if __name__ == "__main__":
     db_session.global_init("db/data.db")
-    # port = int(os.environ.get("PORT", 5000))
-    # app.run(host='0.0.0.0', port=port)
-    app.run(port=8080, host="127.0.0.1")
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+    # app.run(port=8080, host="127.0.0.1")

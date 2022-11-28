@@ -3358,6 +3358,450 @@ EPUBJS.Reader = function (bookPath, _options) {
         height: "100%",
     });
 
+    const getRect = (target, frame) => {
+        const rect = target.getBoundingClientRect()
+        const viewElementRect =
+            frame ? frame.getBoundingClientRect() : {left: 0, top: 0}
+        const left = rect.left + viewElementRect.left
+        const right = rect.right + viewElementRect.left
+        const top = rect.top + viewElementRect.top
+        const bottom = rect.bottom + viewElementRect.top
+        return {left, right, top, bottom}
+    }
+
+    this.rendition.hooks.content.register((contents, /*view*/) => {
+        const frame = contents.document.defaultView.frameElement
+        contents.document.onclick = e => {
+            const selection = contents.window.getSelection()
+            const range = selection.getRangeAt(0)
+            const {left, right, top, bottom} = getRect(range, frame)
+            if (selection.toString().length > 1 && selection.toString().length < 200) {
+                getTranslate(selection.toString())
+            }
+            console.log(selection.toString())
+            paragraph = this.rendition.location.start.index
+            pageNumber = this.rendition.location.start.displayed.page
+            // Note: besides a range object, the same method can also be used to get the position of any element
+        }
+    })
+
+    this.rendition.on('relocated', function (locations) {
+        paragraph = book.rendition.location.start.index
+        pageNumber = book.rendition.location.start.displayed.page
+        console.log(paragraph, pageNumber)
+        var modalCurrent = document.querySelector(".modal")
+        if (paragraph === 2 && pageNumber === 1) {
+            modalCurrent.innerHTML = "<div class=\"swiper\">\n" +
+                "        <!-- Additional required wrapper -->\n" +
+                "        <div class=\"swiper-wrapper\">\n" +
+                "            <!-- Slides -->\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">1. She wrote her first detective novel, The\n" +
+                "                                Mysterious Affair at Styles, after a bet with her sister, Madge,\n" +
+                "                                which was a huge success only after 6 rejections from various\n" +
+                "                                publishers.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">2. Twice in her life she ‘saw’ Hercule Poirot -\n" +
+                "                                once\n" +
+                "                                lunching in the Savoy and once on a boat in the Canary Islands,\n" +
+                "                                meaning that her famous character and the main character in the book\n" +
+                "                                you are going to read was a real person.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">3. Agatha Christie’s name has appeared every day\n" +
+                "                                for the last 53 years in every newspaper with a West End theatre\n" +
+                "                                listing. Apart from during lockdown in 2020! Such a worldwide\n" +
+                "                                fame!</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">4. In her early years she didn’t go to school but\n" +
+                "                                was educated by her mother and a succession of governesses and her\n" +
+                "                                parents didn’t let her read until she turns 8, thanks to her sister\n" +
+                "                                she learned how to read at 4 and never stopped.</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">5. As a child, Christie loved the lavish feasts\n" +
+                "                                that were prepared at Christmas. She would engage in eating contests\n" +
+                "                                with a friend and never get sick. She loved everything but the oyster\n" +
+                "                                soup, and the food helped inspire her story \"The Adventure of the\n" +
+                "                                Christmas Pudding.\"</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">6. In her late teens she studied in Paris to be a\n" +
+                "                                classical musician but was too nervous to perform. Relatable\n" +
+                "                                Queen!</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">7. She suffered from seasickness – as does\n" +
+                "                                Poirot. (our main character)</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">8. She is credited with being the first Western\n" +
+                "                                woman to stand up on a surf board. This happened when she visited\n" +
+                "                                South Africa and then Hawaii in 1922.</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">9. Room 411 at the Pera Palace Hotel in Istanbul\n" +
+                "                                is dedicated to Christie. She is said to have written part of Murder\n" +
+                "                                on the Orient Express there. The room has pictures of her and many\n" +
+                "                                copies of her books.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">10. She was a dog lover. Her first dog was a\n" +
+                "                                Yorkshire Terrier puppy which she received as a fifth birthday\n" +
+                "                                present. She was so overwhelmed with happiness that she couldn't even\n" +
+                "                                say \"thank you\" and retreated to the lavatory to get her thoughts\n" +
+                "                                together. The dog was named Tony– although his full name was George\n" +
+                "                                Washington.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">11. Her favourite colour was green.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">12. Fiercest dislike: the taste and smell of hot\n" +
+                "                                milk.”</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">13. Christie was once surprised by a letter from\n" +
+                "                                a woman she'd never met who asked Christie to adopt her! Christie was\n" +
+                "                                embarrassed and tried to decline as politely as possible. That’s\n" +
+                "                                where probably the stan culture was born.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">14. The two things that excited her most in life\n" +
+                "                                were her car – the “grey bottle-nosed” Morris Cowley. The second was\n" +
+                "                                dining with the Queen at Buckingham Palace. Such a girlboss!</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">15. With more than 2 billion books published, she\n" +
+                "                                is outsold only by the Bible and Shakespeare.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">16. Her books have been published in over 100\n" +
+                "                                languages, making her the most translated writer of all time.</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content swiper__content-center\">\n" +
+                "                    <h3 class=\"swiper__title\">Take a quiz about Agatha Christie online</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <a class=\"swiper__linkAc\"\n" +
+                "                               href=\"https://www.theguardian.com/books/quiz/2009/sep/14/agatha-christie-quiz\"\n" +
+                "                               target=\"_blank\">Quiz</a>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "\n" +
+                "        </div>\n" +
+                "\n" +
+                "        <!-- If we need navigation buttons -->\n" +
+                "        <div class=\"swiper-button-prev\"></div>\n" +
+                "        <div class=\"swiper-button-next\"></div>\n" +
+                "\n" +
+                "    </div>"
+            document.querySelector(".modal").classList.add("md-show")
+        }
+        else if (paragraph <= 2 && pageNumber <= 9) {
+            modalCurrent.innerHTML = "<div class=\"swiper\">\n" +
+                "        <!-- Additional required wrapper -->\n" +
+                "        <div class=\"swiper-wrapper\">\n" +
+                "            <!-- Slides -->\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">1. She wrote her first detective novel, The\n" +
+                "                                Mysterious Affair at Styles, after a bet with her sister, Madge,\n" +
+                "                                which was a huge success only after 6 rejections from various\n" +
+                "                                publishers.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">2. Twice in her life she ‘saw’ Hercule Poirot -\n" +
+                "                                once\n" +
+                "                                lunching in the Savoy and once on a boat in the Canary Islands,\n" +
+                "                                meaning that her famous character and the main character in the book\n" +
+                "                                you are going to read was a real person.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">3. Agatha Christie’s name has appeared every day\n" +
+                "                                for the last 53 years in every newspaper with a West End theatre\n" +
+                "                                listing. Apart from during lockdown in 2020! Such a worldwide\n" +
+                "                                fame!</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">4. In her early years she didn’t go to school but\n" +
+                "                                was educated by her mother and a succession of governesses and her\n" +
+                "                                parents didn’t let her read until she turns 8, thanks to her sister\n" +
+                "                                she learned how to read at 4 and never stopped.</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">5. As a child, Christie loved the lavish feasts\n" +
+                "                                that were prepared at Christmas. She would engage in eating contests\n" +
+                "                                with a friend and never get sick. She loved everything but the oyster\n" +
+                "                                soup, and the food helped inspire her story \"The Adventure of the\n" +
+                "                                Christmas Pudding.\"</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">6. In her late teens she studied in Paris to be a\n" +
+                "                                classical musician but was too nervous to perform. Relatable\n" +
+                "                                Queen!</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">7. She suffered from seasickness – as does\n" +
+                "                                Poirot. (our main character)</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">8. She is credited with being the first Western\n" +
+                "                                woman to stand up on a surf board. This happened when she visited\n" +
+                "                                South Africa and then Hawaii in 1922.</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">9. Room 411 at the Pera Palace Hotel in Istanbul\n" +
+                "                                is dedicated to Christie. She is said to have written part of Murder\n" +
+                "                                on the Orient Express there. The room has pictures of her and many\n" +
+                "                                copies of her books.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">10. She was a dog lover. Her first dog was a\n" +
+                "                                Yorkshire Terrier puppy which she received as a fifth birthday\n" +
+                "                                present. She was so overwhelmed with happiness that she couldn't even\n" +
+                "                                say \"thank you\" and retreated to the lavatory to get her thoughts\n" +
+                "                                together. The dog was named Tony– although his full name was George\n" +
+                "                                Washington.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">11. Her favourite colour was green.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">12. Fiercest dislike: the taste and smell of hot\n" +
+                "                                milk.”</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content\">\n" +
+                "                    <h3 class=\"swiper__title\">Agatha Christie facts and why you should pick this very\n" +
+                "                        book and the author</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">13. Christie was once surprised by a letter from\n" +
+                "                                a woman she'd never met who asked Christie to adopt her! Christie was\n" +
+                "                                embarrassed and tried to decline as politely as possible. That’s\n" +
+                "                                where probably the stan culture was born.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">14. The two things that excited her most in life\n" +
+                "                                were her car – the “grey bottle-nosed” Morris Cowley. The second was\n" +
+                "                                dining with the Queen at Buckingham Palace. Such a girlboss!</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">15. With more than 2 billion books published, she\n" +
+                "                                is outsold only by the Bible and Shakespeare.</p>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <p class=\"swiper__fact\">16. Her books have been published in over 100\n" +
+                "                                languages, making her the most translated writer of all time.</p>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content swiper__content-center\">\n" +
+                "                    <h3 class=\"swiper__title\">Take a quiz about Agatha Christie online</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <a class=\"swiper__linkAc\" href=\"https://www.theguardian.com/books/quiz/2009/sep/14/agatha-christie-quiz\" target=\"_blank\">Quiz</a>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "\n" +
+                "        </div>\n" +
+                "\n" +
+                "        <!-- If we need navigation buttons -->\n" +
+                "        <div class=\"swiper-button-prev\"></div>\n" +
+                "        <div class=\"swiper-button-next\"></div>\n" +
+                "\n" +
+                "    </div>"
+        }
+        else if (paragraph <= 3 && pageNumber <= 9) {
+            modalCurrent.innerHTML = "<div class=\"swiper\">\n" +
+                "    <!-- Additional required wrapper -->\n" +
+                "    <div class=\"swiper-wrapper\">\n" +
+                "        <!-- Slides -->\n" +
+                "        <div class=\"swiper-slide swiper-slide-poirot\">\n" +
+                "            <div class=\"swiper__content\">\n" +
+                "                <h3 class=\"swiper__title\">“Only some damned foreigner.”</h3>\n" +
+                "                <ul class=\"swiper__list\">\n" +
+                "                    <li class=\"swiper__item\">\n" +
+                "                        <p class=\"swiper__fact\">Poirot - an arrogant Belgian detective, he has an\n" +
+                "                            obsessive-compulsive disorder which means repeated unwanted thoughts or\n" +
+                "                            sensations (obsessions) or the urge to do something over and over again\n" +
+                "                            (compulsions). he finds it \"really insupportable that every hen lays an\n" +
+                "                            egg of a different size! What symmetry can there be on the breakfast\n" +
+                "                            table?\" He’s also known to have refused to eat an irregularly shaped loaf\n" +
+                "                            of bread. Poirot’s moustache was so important that Agatha Christie was\n" +
+                "                            asked to approve its appearance in the 1965 comedy mystery film The\n" +
+                "                            Alphabet Murders. Poirot thinks decaff coffee is an abomination. </p>\n" +
+                "                    </li>\n" +
+                "                </ul>\n" +
+                "            </div>\n" +
+                "            <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "        </div>\n" +
+                "\n" +
+                "    </div>\n" +
+                "\n" +
+                "    <!-- If we need navigation buttons -->\n" +
+                "    <div class=\"swiper-button-prev\"></div>\n" +
+                "    <div class=\"swiper-button-next\"></div>\n" +
+                "\n" +
+                "</div>"
+        }
+        else if (paragraph >= 6 && pageNumber >= 1) {
+            modalCurrent.innerHTML = "<div class=\"swiper\">\n" +
+                "    <!-- Additional required wrapper -->\n" +
+                "    <div class=\"swiper-wrapper\">\n" +
+                "        <!-- Slides -->\n" +
+                "        <div class=\"swiper-slide swiper-slide-large\">\n" +
+                "            <div class=\"swiper__content swiper__content-large\">\n" +
+                "                <h3 class=\"swiper__title\">The place where the train stopped</h3>\n" +
+                "                <ul class=\"swiper__list\">\n" +
+                "                    <li class=\"swiper__item\">\n" +
+                "                        <img src=\"../static/img/alps.jpg\" alt=\"alps\" id=\"yourImage\">\n" +
+                "                    </li>\n" +
+                "                </ul>\n" +
+                "            </div>\n" +
+                "            <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "        </div>\n" +
+                "        <div class=\"swiper-slide swiper-slide-large\">\n" +
+                "            <div class=\"swiper__content swiper__content-large\">\n" +
+                "                <h3 class=\"swiper__title\">Threat letter</h3>\n" +
+                "                <ul class=\"swiper__list\">\n" +
+                "                    <li class=\"swiper__item\">\n" +
+                "                        <img src=\"../static/img/zapis2.jpg\" alt=\"alps\">\n" +
+                "                    </li>\n" +
+                "                </ul>\n" +
+                "            </div>\n" +
+                "            <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "        </div>\n" +
+                "        <div class=\"swiper-slide swiper-slide-large\">\n" +
+                "            <div class=\"swiper__content swiper__content-large\">\n" +
+                "                <h3 class=\"swiper__title\">The layout of the people in the Orient Express</h3>\n" +
+                "                <ul class=\"swiper__list\">\n" +
+                "                    <li class=\"swiper__item\">\n" +
+                "                        <img src=\"../static/img/schema.jpg\" alt=\"alps\">\n" +
+                "                    </li>\n" +
+                "                </ul>\n" +
+                "            </div>\n" +
+                "            <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "        </div>\n" +
+                "        <div class=\"swiper-slide swiper-slide-large\">\n" +
+                "                <div class=\"swiper__content swiper__content-center\">\n" +
+                "                    <h3 class=\"swiper__title\">Who is the murderer? Make your own guess</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <a class=\"swiper__linkAc\" href=\"https://docs.google.com/forms/d/e/1FAIpQLScx5-LRjOn6_2Oqox6i5m0XCz9qXtfRyICYQak0Aj49AZX6Cw/viewform?usp=sf_link\" target=\"_blank\">To make a guess</a>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "\n" +
+                "    </div>\n" +
+                "</div>"
+        }
+        if (paragraph >= 33 && pageNumber >= 11) {
+            modalCurrent.innerHTML = "<div class=\"swiper\">\n" +
+                "        <!-- Additional required wrapper -->\n" +
+                "        <div class=\"swiper-wrapper\">\n" +
+                "            <!-- Slides -->\n" +
+                "            <div class=\"swiper-slide\">\n" +
+                "                <div class=\"swiper__content swiper__content-center\">\n" +
+                "                    <h3 class=\"swiper__title\">Task</h3>\n" +
+                "                    <ul class=\"swiper__list\">\n" +
+                "                        <li class=\"swiper__item\">\n" +
+                "                            <a class=\"swiper__linkAc\" href=\"https://www.fbi.gov/history/famous-cases/lindbergh-kidnapping\" target=\"_blank\">Task</a>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "                <div class=\"closer icon-cancel-circled\"></div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </div>"
+        }
+        new Swiper(".swiper", {
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            observeParents: true,
+        });
+    });
+
+
     this.rendition.themes.default({
         p: {
             "font-size": '24px',

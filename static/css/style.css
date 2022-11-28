@@ -716,6 +716,8 @@ svg {
 }
 
 /* ---------------------------------------------------------------------------- */
-p::selection {
-background: #ffb7b7; /* Safari */
+
+mark {
+  background: orange;
+  color: black;
 }

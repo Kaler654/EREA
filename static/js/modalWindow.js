@@ -18,9 +18,7 @@ function ModalWindow(content, movable) {
         var overlay = document.createElement('div');
 
         overlay.className = 'modal-overlay';
-
         overlay.addEventListener('click', function () {
-            delIframeSelection(document.querySelectorAll("iframe")[0])
             context.close();
         });
 

@@ -1,21 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="test.css">
+    <title>Главная страница</title>
+    <script>
+        function openPage() {
+            var newwin = window.open('bgsound.html', 'ert', 'scrollbars=0, resizable=0, titlebar=1, height=20, width=320');
+            newwin.blur(); // скрываем окно с фоновой музыкой
+        }
+    </script>
 </head>
-<body>
-<iframe src="https://logrocket.com/" onload="onLoad()" onerror="onError()"></iframe>
-<script>
-    const iframe = document.querySelectorAll("iframe")[0];
-
-    iframe.onload = function () {
-        console.log("iframe загрузился");
-    }
-</script>
+<body onload="openPage()">
+<a href="otherpage.html"> Перейти и послушать музыку на другой странице, вдруг не играет? </a>
 </body>
 </html>

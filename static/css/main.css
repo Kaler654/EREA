@@ -326,8 +326,8 @@ input:-ms-placeholder {
 }
 
 #tocView::-webkit-scrollbar {
-      width: 0;
-      height: 0;
+    width: 0;
+    height: 0;
 }
 
 #sidebar.open #tocView {
@@ -556,7 +556,7 @@ input:-ms-placeholder {
 
 .modal {
     position: fixed;
-    top: 50%;
+    top: 23rem;
     left: 50%;
     width: 50%;
     width: 630px;
@@ -578,7 +578,8 @@ input:-ms-placeholder {
     left: 0;
     z-index: 1000;
     opacity: 0;
-    background: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(1px);
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
@@ -838,6 +839,11 @@ input:-ms-placeholder {
 }
 
 /* '' */
+
+.icon-music:before {
+    content: "\266C";
+}
+
 .icon-bookmark:before {
     content: '\e805';
 }
@@ -863,8 +869,12 @@ input:-ms-placeholder {
 }
 
 /* '' */
+.icon-cog {
+    opacity: 1;
+}
+
 .icon-cog:before {
-    content: '\e813';
+    content: '\1F4A1';
 }
 
 /* '' */
@@ -928,3 +938,110 @@ input:-ms-placeholder {
 }
 
 /* '' */
+
+.swiper .swiper-button-prev::after,
+.swiper .swiper-button-next::after {
+    color: #fff;
+    font-size: 30px;
+}
+
+
+.swiper-slide {
+    border-radius: 5px;
+}
+
+.swiper__content {
+    color: #fff;
+    background-color: #111111;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 70px;
+    position: relative;
+    height: 100%;
+}
+
+.closer {
+    position: absolute;
+    right: 2px;
+    top: 9px;
+    cursor: pointer;
+}
+
+ul li {
+    list-style: none;
+}
+
+.swiper__title {
+    text-align: center;
+    line-height: 1.7rem;
+    margin: 0px;
+    padding: 15px 0px;
+}
+
+
+.swiper__list {
+    padding: 0px;
+    margin: 0px;
+}
+
+.swiper__item {
+    padding: 0.8rem 0px;
+}
+
+.swiper__fact {
+    margin: 0;
+    line-height: 1.3rem;
+}
+
+.swiper__linkAc {
+    margin: 0;
+    line-height: 1.3rem;
+    color: #dddddd;
+    text-decoration: underline #ffffff;
+}
+
+.swiper__content-center {
+    text-align: center;
+}
+
+.swiper-slide {
+    height: 510px !important;
+}
+
+.swiper-slide-poirot {
+    height: 400px !important;
+}
+
+.swiper__item img {
+    max-width: 100%;
+}
+
+.swiper__content-large {
+    padding: 0px;
+    margin: 0px;
+}
+
+.swiper-slide-large {
+    height: 380px !important;
+}
+
+
+.audio-player {
+    width: 15rem;
+    height: 15rem;
+}
+
+.icon-container {
+    width: 100%;
+    height: 100%;
+    background-color: #DE5E97;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.audio-icon {
+    width: 90%;
+    height: 90%;
+}

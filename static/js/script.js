@@ -1,25 +1,45 @@
-function getIframeSelectionText(iframe) {
-    let win = iframe.contentWindow;
-    let doc = iframe.contentDocument || win.document;
+// Анимация при прокрутке
 
-    if (win.getSelection) {
-        let resSelection = win.getSelection().toString();
-        return resSelection;
-    } else if (doc.selection && doc.selection.createRange) {
-        let resSelection = doc.selection.createRange().text;
-        return resSelection;
+const animItems = document.querySelectorAll('._anim-items');
+
+if (animItems.length > 0) {
+    window.addEventListener('scroll', animOnScroll);
+
+    function animOnScroll() {
+        for (let index = 0; index < animItems.length; index++) {
+            const animItem = animItems[index];
+            const animItemHeight = animItem.offsetHeight;
+            const animItemOffset = offset(animItem).top;
+            const animStart = 4;
+
+            let animItemPoint = window.innerHeight - animItemHeight / animStart;
+            if (animItemHeight > window.innerHeight) {
+                animItemPoint = window.innerHeight - window.innerHeight / animStart;
+            }
+
+            if ((pageYOffset > animItemOffset - animItemPoint + 80) && pageYOffset < (animItemOffset + animItemHeight)) {
+                animItem.classList.add('_active');
+            } else {
+                if (!animItem.classList.contains('_anim-no-hide')) {
+                    animItem.classList.remove('_active');
+                }
+            }
+        }
     }
+
+
+    function offset(el) {
+        const rect = el.getBoundingClientRect(),
+            scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+            scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
+    }
+
+    setTimeout(() => {
+        animOnScroll();
+    }, 300);
 }
 
-function delIframeSelection(iframe) {
-    let win = iframe.contentWindow;
-    let doc = iframe.contentDocument || win.document;
-    if (win.getSelection) {
-        win.getSelection().removeAllRanges();
-    } else if (doc.selection && doc.selection.createRange) {
-        win.getSelection().removeAllRanges();
-    }
-}
 
 function getTranslate(selectedText) {
     let xhr = new XMLHttpRequest();
@@ -37,30 +57,14 @@ function getTranslate(selectedText) {
                 let htmlModal = '<div class="modal__translate"><span class="word_tat">tat_word</span> — <span class="word_ru">ru_word</span></div>'.replace("tat_word", selectedText).replace("ru_word", translate) +
                     '<span class="modal__btn" onclick="addWordToDictionary()">Добавить в словарик</span>';
                 new ModalWindow(htmlModal).show();
-                delIframeSelection(document.querySelectorAll("iframe")[0])
                 console.log("onreadystatechange")
+                iframe = document.querySelectorAll("iframe")[0].contentWindow;
+                iframe.getSelection().removeAllRanges()
             }
         }
         ;
     };
     console.log("getTranslate`")
-}
-
-
-function startSelect() {
-    console.log("go");
-    document.querySelectorAll("iframe")[0].contentDocument.addEventListener('mouseup', event => {
-        let iframe = document.querySelectorAll("iframe")[0];
-        let selectText = getIframeSelectionText(iframe);
-        console.log(selectText.length)
-        if ((selectText.length > 1) && (selectText.length < 200)) {
-            console.log(selectText)
-            console.log(selectText.length)
-            if (document.querySelectorAll(".modal-window").length < 1) {
-                getTranslate(selectText);
-            }
-        }
-    });
 }
 
 function addWordToDictionary() {
@@ -87,15 +91,5 @@ function removeWordFromDictionary() {
     document.querySelectorAll(".modal__btn")[0].setAttribute("onclick", "addWordToDictionary()")
 }
 
-function hang_links() {
-    tocLinks = document.querySelectorAll(".toc_link")
-    for (index = 0; index < tocLinks.length; index++) {
-        console.log(tocLinks[index])
-        tocLinks[index].setAttribute("onclick", "setTimeout(startSelect, 1000)")
-    }
-}
 
-
-setTimeout(startSelect, 1000)
-setTimeout(hang_links, 1000)
-
+// setTimeout(startSelect, 1000)
