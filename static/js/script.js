@@ -40,6 +40,9 @@ if (animItems.length > 0) {
     }, 300);
 }
 
+$(document).ready(function () {
+    $('#ex1').zoom();
+});
 
 function getTranslate(selectedText) {
     let xhr = new XMLHttpRequest();
@@ -54,7 +57,7 @@ function getTranslate(selectedText) {
             let data = JSON.parse(this.responseText);
             let translate = data["translate"];
             if (document.querySelectorAll(".modal-window").length < 1) {
-                let htmlModal = '<div class="modal__translate"><span class="word_tat">tat_word</span> — <span class="word_ru">ru_word</span></div>'.replace("tat_word", selectedText).replace("ru_word", translate) +
+                let htmlModal = '<div class="modal__translate"><span class="word_en">tat_word</span> — <span class="word_ru">ru_word</span></div>'.replace("tat_word", selectedText).replace("ru_word", translate) +
                     '<span class="modal__btn" onclick="addWordToDictionary()">Добавить в словарик</span>';
                 new ModalWindow(htmlModal).show();
                 console.log("onreadystatechange")
@@ -68,24 +71,24 @@ function getTranslate(selectedText) {
 }
 
 function addWordToDictionary() {
-    let word_tat = document.querySelectorAll(".word_tat")[0].innerHTML
+    let word_en = document.querySelectorAll(".word_en")[0].innerHTML
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/add_wordToDict", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
-        word: word_tat
+        word: word_en
     }));
     document.querySelectorAll(".modal__btn")[0].innerHTML = "Удалить из словарика"
     document.querySelectorAll(".modal__btn")[0].setAttribute("onclick", "removeWordFromDictionary()")
 }
 
 function removeWordFromDictionary() {
-    let word_tat = document.querySelectorAll(".word_tat")[0].innerHTML
+    let word_en = document.querySelectorAll(".word_en")[0].innerHTML
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/remove_wordFromDict", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
-        word: word_tat
+        word: word_en
     }));
     document.querySelectorAll(".modal__btn")[0].innerHTML = "Добавить в словарик"
     document.querySelectorAll(".modal__btn")[0].setAttribute("onclick", "addWordToDictionary()")

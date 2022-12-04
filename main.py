@@ -2,13 +2,14 @@ from flask import Flask, render_template, url_for, redirect, request
 from flask_login import login_user, login_required, logout_user, current_user
 from forms.register_form import RegisterForm
 from forms.login_form import LoginForm
-from data.users import User
+from data.models import Users, Users_to_words, Words
 from data import db_session
 import datetime
 import os
 from flask_login import LoginManager
 import translators as ts
 import json
+import sqlalchemy
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "N#pC@UzmS5kw%@$F"
@@ -19,9 +20,25 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+@app.route("/dictionary")
+def dictionary():
+    db_sess = db_session.create_session()
+    words_id = list(
+        map(lambda x: x.word_id,
+            db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id).all()))
+    words = db_sess.query(Words.word_en, Words.word_ru).join(Users_to_words).filter(
+        Words.id.in_(list(map(int, words_id))), Users_to_words.user_id == current_user.id).all()
+    print(words)
+    return render_template("dictionary.html", words=words)
+
+
 def translate_js(word):
     word = str(word)
-    return ts.google(word, from_language='tt', to_language='ru')
+    return ts.google(word, from_language='en', to_language='ru')
+
+
+def translate_en_to_rus(word: str):
+    return ts.google(word, from_language='en', to_language='ru')
 
 
 @app.route("/get_translate", methods=["POST"])
@@ -33,59 +50,59 @@ def get_translate():
     return json.dumps({"translate": translate_js(text)})
 
 
-# def add_word_to_dict(w):  # принимает татарское слово
-#     db_sess = db_session.create_session()
-#     word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()
-#     if not word_id:
-#         new_word = Words()
-#         new_word.word_tat = w.lower()
-#         new_word.word_ru = translate_tat_to_rus(w.lower())
-#         db_sess.add(new_word)
-#         db_sess.commit()
-#     word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()[0]
-#     new_ass = Users_to_words()
-#     new_ass.word_id = word_id
-#     new_ass.user_id = current_user.id
-#     try:
-#         db_sess.add(new_ass)
-#         db_sess.commit()
-#     except sqlalchemy.exc.IntegrityError:
-#         pass
-#
-#
-# def delete_word_of_dict(w):  # принимает татарское слово
-#     db_sess = db_session.create_session()
-#     word_id = db_sess.query(Words.id).filter(Words.word_tat == w.lower()).first()
-#     if word_id:
-#         word = db_sess.query(Words).filter(Words.id == word_id[0]).first()
-#         ass = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
-#                                                    Users_to_words.word_id == word_id[0]).first()
-#         db_sess.delete(word)
-#         db_sess.delete(ass)
-#         db_sess.commit()
+def add_word_to_dict(w):  # принимает татарское слово
+    db_sess = db_session.create_session()
+    word_id = db_sess.query(Words.id).filter(Words.word_en == w.lower()).first()
+    if not word_id:
+        new_word = Words()
+        new_word.word_en = w.lower()
+        new_word.word_ru = translate_en_to_rus(w.lower())
+        db_sess.add(new_word)
+        db_sess.commit()
+    word_id = db_sess.query(Words.id).filter(Words.word_en == w.lower()).first()[0]
+    new_ass = Users_to_words()
+    new_ass.word_id = word_id
+    new_ass.user_id = current_user.id
+    try:
+        db_sess.add(new_ass)
+        db_sess.commit()
+    except sqlalchemy.exc.IntegrityError:
+        pass
 
 
-# @app.route("/add_wordToDict", methods=["POST"])
-# def add_word_post():
-#     word = json.loads(request.data)["word"]
-#     print(word)
-#     add_word_to_dict(word)
-#     return json.dumps({'success': True})
-#
-#
-# @app.route("/remove_wordFromDict", methods=["POST"])
-# def remove_word_post():
-#     word = json.loads(request.data)["word"]
-#     print(word)
-#     delete_word_of_dict(word)
-#     return json.dumps({'success': True})
+def delete_word_of_dict(w):  # принимает татарское слово
+    db_sess = db_session.create_session()
+    word_id = db_sess.query(Words.id).filter(Words.word_en == w.lower()).first()
+    if word_id:
+        word = db_sess.query(Words).filter(Words.id == word_id[0]).first()
+        ass = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
+                                                   Users_to_words.word_id == word_id[0]).first()
+        db_sess.delete(word)
+        db_sess.delete(ass)
+        db_sess.commit()
+
+
+@app.route("/add_wordToDict", methods=["POST"])
+def add_word_post():
+    word = json.loads(request.data)["word"]
+    print(word)
+    add_word_to_dict(word)
+    return json.dumps({'success': True})
+
+
+@app.route("/remove_wordFromDict", methods=["POST"])
+def remove_word_post():
+    word = json.loads(request.data)["word"]
+    print(word)
+    delete_word_of_dict(word)
+    return json.dumps({'success': True})
 
 
 @login_manager.user_loader
 def load_user(user_id):
     """Получение текущего пользователся"""
     db_sess = db_session.create_session()
-    return db_sess.query(User).get(user_id)
+    return db_sess.query(Users).get(user_id)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -102,7 +119,7 @@ def reqister():
             )
         db_sess = db_session.create_session()
 
-        all_users = db_sess.query(User.name).all()
+        all_users = db_sess.query(Users.name).all()
         if not all([form.name.data != user_name[0] for user_name in all_users]):
             return render_template(
                 "register.html",
@@ -110,11 +127,11 @@ def reqister():
                 message="There is already a user with the same name",
             )
 
-        if db_sess.query(User).filter(User.name == form.name.data).first():
+        if db_sess.query(Users).filter(Users.name == form.name.data).first():
             return render_template(
                 "register.html", form=form, message="This user already exists"
             )
-        user = User(
+        user = Users(
             name=form.name.data,
         )
         user.set_password(form.password.data)
@@ -131,7 +148,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.name == form.name.data).first()
+        user = db_sess.query(Users).filter(Users.name == form.name.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=True)
             return redirect("/book")
@@ -175,8 +192,12 @@ def logout():
     return redirect("/")
 
 
-if __name__ == "__main__":
+def create_app():
     db_session.global_init("db/data.db")
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-    # app.run(port=8080, host="127.0.0.1")
+    app.run(port=8080, host="127.0.0.1")
+    return app
+
+
+if __name__ == "__main__":
+    create_app()

@@ -508,6 +508,28 @@ svg {
 }
 
 
+.about {
+    position: relative;
+    background-color: #0B0B0B;
+    padding: 50px 0 15px 0;
+}
+
+.about__container {
+}
+
+.about__content {
+    text-align: center;
+}
+
+.about__title {
+    color: #fff;
+    font-size: 42px;
+    letter-spacing: 10px;
+    font-weight: 700;
+    margin: 0px 0px 30px 0px;
+}
+
+
 /*-----------------------*/
 .timeline-container {
     min-height: 100vh;
@@ -527,6 +549,10 @@ svg {
 
 .timeline ul {
     list-style: none;
+}
+
+.timeline li {
+    width: 500px !important;
 }
 
 .timeline ul li {
@@ -591,14 +617,14 @@ svg {
     .timeline ul li:nth-child(odd) {
         float: left;
         clear: right;
-        transform: translateX(-5px);
+        transform: translateX(-56%);
         border-radius: 20px 0px 20px 20px;
     }
 
     .timeline ul li:nth-child(even) {
         float: right;
         clear: left;
-        transform: translateX(5px);
+        transform: translateX(56%);
         border-radius: 0px 20px 20px 20px;
     }
 
@@ -718,6 +744,75 @@ svg {
 /* ---------------------------------------------------------------------------- */
 
 mark {
-  background: orange;
-  color: black;
+    background: orange;
+    color: black;
+}
+
+/* DICTIONARY */
+
+.dictionary {
+    background-color: #111111;
+    min-height: 100vh;
+    padding-top: 100px;
+}
+
+.dictionary__container {
+    display: flex;
+    justify-content: center;
+}
+
+.dictionary__table {
+    width: 800px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.dictionary__th,
+.dictionary__td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.dictionary__td {
+    border-bottom: 2px solid #1C1C1C;
+}
+
+.dictionary__td:nth-child(odd) {
+    border-right: 2px solid #1C1C1C;
+}
+
+.dictionary__tr:last-child .dictionary__td {
+    border-bottom: 0px solid #55608f;
+}
+
+
+.dictionary__th, .dictionary__td {
+    text-align: center;
+}
+
+.dictionary__thead .dictionary__th {
+    background-color: #55608f;
+}
+
+.dictionary__tbody .dictionary__tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.dictionary__tbody .dictionary__td {
+    position: relative;
+}
+
+.dictionary__tbody .dictionary__td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: -1;
 }

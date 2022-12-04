@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dictionary">
+    <div class="dictionary__container">
+        <table class="dictionary__table">
+            <thead class="dictionary__thead">
+            <tr class="dictionary__tr">
+                <th class="dictionary__th">Words</th>
+                <th class="dictionary__th">Translate</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in words %}
+            <tr class="dictionary__tr">
+                <td class="dictionary__td">{{ item[0]}}</td>
+                <td class="dictionary__td">{{ item[1]}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

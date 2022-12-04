@@ -57,7 +57,7 @@ body {
 }
 
 #titlebar a {
-    width: 18px;
+    width: 23px;
     height: 19px;
     line-height: 20px;
     overflow: hidden;
@@ -840,6 +840,14 @@ input:-ms-placeholder {
 
 /* '' */
 
+.icon-dictionary:before {
+    content: "\1F56E";
+}
+
+.icon-dictionary {
+    text-decoration: none;
+}
+
 .icon-music:before {
     content: "\266C";
 }
@@ -1004,6 +1012,7 @@ ul li {
     text-align: center;
 }
 
+
 .swiper-slide {
     height: 510px !important;
 }
@@ -1011,6 +1020,11 @@ ul li {
 .swiper-slide-poirot {
     height: 400px !important;
 }
+
+.swiper-slide-large {
+    height: 830px !important;
+}
+
 
 .swiper__item img {
     max-width: 100%;
@@ -1025,6 +1039,9 @@ ul li {
     height: 380px !important;
 }
 
+.swiper-train {
+    height: 650px !important;
+}
 
 .audio-player {
     width: 15rem;
