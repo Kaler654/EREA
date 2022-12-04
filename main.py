@@ -24,21 +24,33 @@ login_manager.init_app(app)
 def dictionary():
     db_sess = db_session.create_session()
     words_id = list(
-        map(lambda x: x.word_id,
-            db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id).all()))
-    words = db_sess.query(Words.word_en, Words.word_ru).join(Users_to_words).filter(
-        Words.id.in_(list(map(int, words_id))), Users_to_words.user_id == current_user.id).all()
+        map(
+            lambda x: x.word_id,
+            db_sess.query(Users_to_words)
+            .filter(Users_to_words.user_id == current_user.id)
+            .all(),
+        )
+    )
+    words = (
+        db_sess.query(Words.word_en, Words.word_ru)
+        .join(Users_to_words)
+        .filter(
+            Words.id.in_(list(map(int, words_id))),
+            Users_to_words.user_id == current_user.id,
+        )
+        .all()
+    )
     print(words)
     return render_template("dictionary.html", words=words)
 
 
 def translate_js(word):
     word = str(word)
-    return ts.google(word, from_language='en', to_language='ru')
+    return ts.google(word, from_language="en", to_language="ru")
 
 
 def translate_en_to_rus(word: str):
-    return ts.google(word, from_language='en', to_language='ru')
+    return ts.google(word, from_language="en", to_language="ru")
 
 
 @app.route("/get_translate", methods=["POST"])
@@ -75,8 +87,14 @@ def delete_word_of_dict(w):  # принимает татарское слово
     word_id = db_sess.query(Words.id).filter(Words.word_en == w.lower()).first()
     if word_id:
         word = db_sess.query(Words).filter(Words.id == word_id[0]).first()
-        ass = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
-                                                   Users_to_words.word_id == word_id[0]).first()
+        ass = (
+            db_sess.query(Users_to_words)
+            .filter(
+                Users_to_words.user_id == current_user.id,
+                Users_to_words.word_id == word_id[0],
+            )
+            .first()
+        )
         db_sess.delete(word)
         db_sess.delete(ass)
         db_sess.commit()
@@ -87,7 +105,7 @@ def add_word_post():
     word = json.loads(request.data)["word"]
     print(word)
     add_word_to_dict(word)
-    return json.dumps({'success': True})
+    return json.dumps({"success": True})
 
 
 @app.route("/remove_wordFromDict", methods=["POST"])
@@ -95,7 +113,7 @@ def remove_word_post():
     word = json.loads(request.data)["word"]
     print(word)
     delete_word_of_dict(word)
-    return json.dumps({'success': True})
+    return json.dumps({"success": True})
 
 
 @login_manager.user_loader

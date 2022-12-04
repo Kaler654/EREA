@@ -3628,7 +3628,7 @@ EPUBJS.Reader = function (bookPath, _options) {
                 "                <h3 class=\"swiper__title\">Threat letter</h3>\n" +
                 "                <ul class=\"swiper__list\">\n" +
                 "                    <li class=\"swiper__item\">\n" +
-                "                        <img src=\"../static/img/zapis2.jpg\" alt=\"alps\">\n" +
+                "                        <img src=\"../static/img/zapis.jpg\" alt=\"alps\">\n" +
                 "                    </li>\n" +
                 "                </ul>\n" +
                 "            </div>\n" +

@@ -19,7 +19,7 @@ class Users(SqlAlchemyBase, UserMixin):
     created_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
     is_admin = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
-    words = orm.relationship('Users_to_words', back_populates='user')
+    words = orm.relationship("Users_to_words", back_populates="user")
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
@@ -29,13 +29,13 @@ class Users(SqlAlchemyBase, UserMixin):
 
 
 class Users_to_words(SqlAlchemyBase):
-    __tablename__ = 'users_to_words'
-    user_id = sqlalchemy.Column(sqlalchemy.ForeignKey('users.id'))
-    word_id = sqlalchemy.Column(sqlalchemy.ForeignKey('words.id'))
+    __tablename__ = "users_to_words"
+    user_id = sqlalchemy.Column(sqlalchemy.ForeignKey("users.id"))
+    word_id = sqlalchemy.Column(sqlalchemy.ForeignKey("words.id"))
     sqlalchemy.PrimaryKeyConstraint(user_id, word_id)
 
-    user = orm.relationship('Users', back_populates='words')
-    word = orm.relationship('Words', back_populates='users')
+    user = orm.relationship("Users", back_populates="words")
+    word = orm.relationship("Words", back_populates="users")
 
 
 class Words(SqlAlchemyBase, SerializerMixin):
@@ -45,4 +45,4 @@ class Words(SqlAlchemyBase, SerializerMixin):
     word_en = sqlalchemy.Column(sqlalchemy.VARCHAR, nullable=False, unique=True)
     word_ru = sqlalchemy.Column(sqlalchemy.VARCHAR, nullable=False, unique=True)
 
-    users = orm.relationship('Users_to_words', back_populates='word')
+    users = orm.relationship("Users_to_words", back_populates="word")

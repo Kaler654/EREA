@@ -40,10 +40,6 @@ if (animItems.length > 0) {
     }, 300);
 }
 
-$(document).ready(function () {
-    $('#ex1').zoom();
-});
-
 function getTranslate(selectedText) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/get_translate", true);
