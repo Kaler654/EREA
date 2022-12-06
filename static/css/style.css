@@ -754,6 +754,7 @@ mark {
     background-color: #111111;
     min-height: 100vh;
     padding-top: 100px;
+    padding-bottom: 50px;
 }
 
 .dictionary__container {
