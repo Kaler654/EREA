@@ -3702,12 +3702,12 @@ EPUBJS.Reader = function (bookPath, _options) {
             "opacity": "1",
         },
     });
+    console.log(123)
 
     this.rendition.themes.register("dark", "../static/css/themes.css");
     this.rendition.themes.register("light", "../static/css/themes.css");
     this.rendition.themes.register("tan", "../static/css/themes.css");
 
-    this.rendition.themes.select("dark");
 
 
     if (this.settings.previousLocationCfi) {

@@ -4967,6 +4967,7 @@ var Contents = function () {
 
 			this.css("overflow-y", "hidden");
 			this.css("margin", "0", true);
+			this.css("color", "#fff");
 
 			if (axis === "vertical") {
 				this.css("padding", gap / 2 + "px 20px", true);
