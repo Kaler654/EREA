@@ -210,12 +210,7 @@ def logout():
     return redirect("/")
 
 
-def create_app():
-    db_session.global_init("db/data.db")
-    port = int(os.environ.get("PORT", 5000))
-    app.run(port=8080, host="127.0.0.1")
-    return app
-
-
 if __name__ == "__main__":
-    create_app()
+    db_session.global_init("db/data.db")
+    port = int(os.environ.get("PORT"))
+    app.run(port=port, host="0.0.0.0")
